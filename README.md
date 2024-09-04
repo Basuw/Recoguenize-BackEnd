@@ -1,53 +1,73 @@
-# Guide d'utilisation de l'application Recoguenize
+# Recoguenize
 
-Cette application a pour but de retrouver le nom d'une musique enregistrée à l'aide du micro du téléphone.
+This application aims to to identify the name of a song you're hearing like the famous app Shazam.
 
-## Musiques présentes
+## Context
 
-L'application est configurée pour reconnaître trois morceaux de musiques différents :
+This project was realised during 1st year of engineering school in computer science at *ISIMA* (equivalent to master in engineering)
 
-1. Thunderstruck d'AC/DC
+## Languages / frameworks
 
-2. Houdini d'Eminem
+- SpringBoot 3 🍃
+- Flutter 📱
+- Python 🐍
+- PostgreSQl 💾
+- Docker 📦
 
-3. Gitano de Kendji Girac
+## User Guide for the Recoguenize App
 
-Seulement les premières minutes sont enregistrées en base. Il est donc possible de reconnaitre seulement la première minute des 3 musiques ci-dessus.
+This app is designed to identify the name of a song recorded using the phone's microphone.
 
-## Installation de l'application mobile
+### Available Songs
 
-Pour installer l'application sur votre smartphone (disponible sur Android uniquement), suivez les instructions suivantes :
+The app is configured to recognize three different songs:
 
-1. Télécharger le fichier app-debug.apk présent dans le repository git.
-2. Il est possible que votre smartphone bloque l'installation de l'application. Pour cela, assurez-vous que dans les paramètres du téléphone, la case "Mes fichiers" soit cochée dans la section "installation d'applis inconnues".
-3. En branchant votre smartphone à l'ordinateur, copiez-collez le fichier .apk dans les fichiers de votre smartphone.
-4. Depuis votre smartphone, lancez le fichier .apk
-5. La partie adresse ip" n'est nécessaire que si vous installez l'application en local comme décrit ci-dessous.
+1. Thunderstruck by AC/DC
+2. Houdini by Eminem
+3. Gitano by Kendji Girac
 
-## Installation du serveur en local
+Only the first minute of each song is recorded in the database. Therefore, the app can only recognize the first minute of the above songs.
 
-| :exclamation:  Si le temps de réponse est anormalement long, c'est que la machine virtuelle rencontre des problèmes   |
-|-----------------------------------------|
+### Installing the Mobile App
+
+To install the app on your smartphone (available on Android only), follow these instructions:
+
+1. Download the `app-debug.apk` file from the [Git repository](https://gitlab.isima.fr/sae1.shazaaam/recoguenize-backend).
+2. Your smartphone may block the installation of the app. To resolve this, make sure that in your phone settings, the "My Files" option is checked under the "Install unknown apps" section.
+3. Connect your smartphone to the computer and copy the `.apk` file to your phone's files.
+4. On your smartphone, launch the `.apk` file.
+5. The "IP address" section is only necessary if you are installing the app locally as described below.
+
+### Installing the Server Locally
+
+> :exclamation: If the response time is unusually long, it means that the virtual machine is experiencing issues.
+
+The app's server is hosted on an Azure virtual machine. Since this may encounter technical issues beyond our control, here is a guide to installing the app locally. It is necessary that both the smartphone and the computer used to launch the app are on the same Wi-Fi network.
+
+1. Clone the Git repository:
+
+    ```bash
+    git clone https://gitlab.isima.fr/sae1.shazaaam/recoguenize-backend.git
+    ```
+
+2. Start Docker:
+
+    ```bash
+    cd recoguenize-backend
+    docker-compose up 
+    ```
+
+3. After about a minute, the server will be started and ready to use.
+
+4. To connect your smartphone to the local server, enter your IP address in the designated section of the app.
+
+5. To find your IP address, open a command prompt on your computer, type `ipconfig`, and enter the value from the "IPv4 Address" field under the "Wireless LAN adapter Wi-Fi" section into the app.
 
 
-Le serveur de l'application est hébergé sur une machine virtuelle Azure. Celle-ci pouvant avoir des problèmes techniques indépendants de notre volonté, voici le guide d'installation de l'application en local.
-Il est nécessaire que le smartphone et l'ordinateur utilisé pour lancer l'appli soient sur le même réseau wifi.
+## Authors
 
-1. Cloner le repository git :
-
-```bash
-git clone https://gitlab.isima.fr/sae1.shazaaam/recoguenize-backend.git
-```
-
-2. Lancer docker :
-
-```bash
-cd recoguenize-backend
-docker-compose up 
-```
-
-3. Au bout d'une minute environ, le serveur est démarré et prêt à être utilisé.
-
-4. Pour que votre smartphone soit connecté au serveur local, rentrez votre adresse ip dans la section prévue à cet effet sur l'application.
-
-5. Pour cela, dans un invite de commande, sur votre ordnateur, tapez "ipconfig" et rentrez la valeur du champ "adresse ipv4", de la partie "carte réseau sans fil wi-fi", dans l'application.
+- Guillhot Alban
+- Imbert Antoine
+- Louis Cambier
+- Yoan Boyer
+- Bastien Jacquelin

@@ -1,0 +1,40 @@
+stages:
+  #- build
+  #- test
+  - deploy
+
+before_script:
+  - apt-get update
+  - apt-get install maven -y
+  - mvn -version
+  - apt install openjdk-21-jdk -y
+  - java --version
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$RUNNER_PRIVATE_SSHKEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+#build:
+#  stage: build
+#  script:
+#    - mvn clean install
+
+#test:
+#  stage: test
+#  script:
+#    - mvn test
+
+deploy:
+  stage: deploy
+  script:
+    - mvn clean install
+    - ssh $AZURE_LOGIN@$VM_IP "sudo docker stop api_runner; sudo docker rm api_runner; rm -rf target/; rm -rf Dockerfile"
+    - scp -r Dockerfile $AZURE_LOGIN@$VM_IP:~
+    - scp -r target/ $AZURE_LOGIN@$VM_IP:~
+    - ssh $AZURE_LOGIN@$VM_IP 'sudo docker image rmi docker_image; sudo docker build -t docker_image . --no-cache=true; sudo docker run -d -p 8080:8080 --name api_runner docker_image'
+  only:
+    refs:
+      - master
+

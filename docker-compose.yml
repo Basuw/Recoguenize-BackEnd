@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+
+  bdd:
+    build: data
+    environment:
+      POSTGRES_DB: Recoguenize
+      POSTGRES_USER: api_client
+      POSTGRES_PASSWORD: ApiClient1234
+    ports:
+      - "5432:5432"
+    networks:
+      - apis
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U api_client -d Recoguenize"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  back:
+    build: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - apis
+    depends_on:
+      bdd:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://back:8080/song/1 || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+  
+  python:
+    build: python
+    ports:
+      - "8000:8000"
+    networks:
+      - apis
+    depends_on:
+      back:
+        condition: service_healthy
+      bdd:
+        condition: service_healthy
+
+  run_script:
+    build:
+      context: .
+      dockerfile: Dockerfile.run_script
+    depends_on:
+      back:
+        condition: service_healthy
+      bdd:
+        condition: service_healthy
+    networks:
+      - apis
+
+networks:
+  apis:
+    driver: bridge

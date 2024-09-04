@@ -1,0 +1,12 @@
+FROM python:3.8.10
+
+WORKDIR /init
+
+RUN pip install numpy
+RUN pip install scipy
+RUN pip install requests
+
+COPY ./python/ /init/
+COPY ./add_music.py /init/add_music.py
+
+CMD ["python", "add_music.py"]

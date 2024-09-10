@@ -63,6 +63,9 @@ The app's server is hosted on an Azure virtual machine. Since this may encounter
 
 5. To find your IP address, open a command prompt on your computer, type `ipconfig`, and enter the value from the "IPv4 Address" field under the "Wireless LAN adapter Wi-Fi" section into the app.
 
+## Others
+
+You can find the repository of the Mobile app📲 by this [link](https://github.com/Basuw/Recoguenize-App). 😃
 
 ## Authors
 
